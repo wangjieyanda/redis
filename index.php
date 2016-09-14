@@ -6,6 +6,7 @@ class getCache {
         'set' => 'set',
         'get' => 'get',
         'getx' => 'get',
+        'lpush' => 'lpush',
     );
 
     public function __construct() {
@@ -31,7 +32,7 @@ class getCache {
     }
 
     public function __call($name, $arguments) {
-        if (array_key_exists($name, $this->tag)) {
+        if (array_key_exists(strtolower($name), $this->tag)) {
             return call_user_func_array(array($this->_redis, $this->tag[$name]), $arguments);
         } else {
             throw new \Exception('no method');
@@ -45,5 +46,5 @@ $a = ['1', '2'];
 $a = $redis->set('hehe', json_encode($a));
 $a = $redis->get('hehe', false);
 $a = $redis->getx('hehe');
-$a = $redis->getxx('hehe');
+$a = $redis->lpush('hehee', '1111');
 var_dump($a);
